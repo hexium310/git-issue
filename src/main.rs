@@ -1,5 +1,3 @@
-#![cfg_attr(test, feature(plugin))]
-#![cfg_attr(test, plugin(clippy))]
 #![cfg_attr(test, allow(unused_imports))]
 
 #[macro_use]
@@ -87,6 +85,8 @@ mod test {
 
         assert_eq!(build_query_string(&no_matches), "");
         assert_eq!(build_query_string(&one_matche), "?opt1=val1");
-        assert_eq!(build_query_string(&two_matches), "?opt1=val1&opt2=val2");
+
+        let case_two = build_query_string(&two_matches);
+        assert!(case_two == "?opt1=val1&opt2=val2" || case_two == "?opt2=val2&opt1=val1" );
     }
 }
