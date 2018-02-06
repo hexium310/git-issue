@@ -1,0 +1,49 @@
+name: git-issue
+version: "0.1.0"
+author: Hexin <hexium310@gmail.com>
+subcommands:
+    - list:
+        about: Show issues list.
+        args:
+            - assignee:
+                short: a
+                long: assignee
+                help: ("username", "*", "none")
+                takes_value: true
+            - creator:
+                short: c
+                long: creator
+                help: The user who created the issue.
+                takes_value: true
+            - direction:
+                short: d
+                long: direction
+                help: The direction of the sort. ("asc", "desc")
+                takes_value: true
+            - labels:
+                short: l
+                long: labels
+                help: A list of comma separated label names.
+                takes_value: true
+            - mentioned:
+                short: m
+                long: mentioned
+                help: A user that's mentioned in the issue.
+                takes_value: true
+            - milestone:
+                long: milestone
+                help: (number, "*", "none")
+                takes_value: true
+            - sort:
+                long: sort
+                help: What to sort results by. ("created", "updated", "comments")
+                takes_value: true
+            - since:
+                long: since
+                help: Only issues updated at or after this time are returned. ("YYYY-MM-DDTHH:MM:SSZ")
+                takes_value: true
+            - state:
+                short: s
+                long: state
+                help: The state of the Issues. ("open", "closed", "all")
+                takes_value: true
