@@ -1,5 +1,5 @@
-#![cfg_attr(test, feature(plugin))]
-#![cfg_attr(test, plugin(clippy))]
+#![cfg_attr(all(test, any(not(feature = "stable"), not(feature = "beta"))), feature(plugin))]
+#![cfg_attr(all(test, any(not(feature = "stable"), not(feature = "beta"))), plugin(clippy))]
 #![cfg_attr(test, allow(unused_imports))]
 
 #[macro_use]
