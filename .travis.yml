@@ -1,1 +1,12 @@
 language: rust
+rust:
+  - stable
+  - beta
+  - nightly
+
+cache: cargo
+before_cache:
+  - chmod -R a+r $HOME/.cargo
+
+notifications:
+  - on_success: never
