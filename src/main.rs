@@ -52,10 +52,9 @@ fn build_query_string(matches: &ArgMatches) -> String {
 
 
 #[cfg(test)]
-mod test {
+mod tests {
     use super::build_query_string;
-    use super::App;
-    use clap::Arg;
+    use clap::{ App, Arg };
 
     #[test]
     fn test_build_query_string() {
