@@ -8,5 +8,9 @@ cache: cargo
 before_cache:
   - chmod -R a+r $HOME/.cargo
 
+script:
+  - cargo build
+  - cargo test
+
 notifications:
   - on_success: never
