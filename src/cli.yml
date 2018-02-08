@@ -2,6 +2,11 @@ name: git-issue
 version: "0.1.0"
 author: Hexin <hexium310@gmail.com>
 subcommands:
+    - show:
+        about: Show the issue detail.
+        args:
+            - number:
+                takes_value: true
     - list:
         about: Show issues list.
         args:
