@@ -24,3 +24,19 @@ pub fn show<S: Into<String>>(owner: S, repo: S, number: i32) {
              json["html_url"].as_str().unwrap(),
              Regex::new("(?m)^").unwrap().replace_all(json["body"].as_str().unwrap(), "\t"));
 }
+
+#[cfg(test)]
+mod tests {
+    use super::show;
+
+    #[test]
+    fn show_show_success() {
+        show("hexium310", "git-issue", 4);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_show_failure() {
+        show("hexium310", "none-of-git-issue", 0);
+    }
+}
