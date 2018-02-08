@@ -37,5 +37,4 @@ mod tests {
     fn test_list_failure() {
         list("hexium310", "none-of-git-issue", "");
     }
-
 }
