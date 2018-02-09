@@ -1,4 +1,8 @@
 language: rust
+
+# https://blog.travis-ci.com/2018-01-08-travis-response-meltdown-spectre
+sudo: require
+
 rust:
   - stable
   - beta
@@ -8,9 +12,37 @@ cache: cargo
 before_cache:
   - chmod -R a+r $HOME/.cargo
 
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - cmake
+      - gcc
+      - binutils-dev
+      - libiberty-dev
+
 script:
   - cargo build
   - cargo test
+
+after_success: |
+  if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_RUST_VERSION" = "stable" ]; then
+    wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+    tar xzf master.tar.gz &&
+    cd kcov-master &&
+    mkdir build &&
+    cd build &&
+    cmake .. &&
+    make &&
+    make install DESTDIR=../../kcov-build &&
+    cd ../.. &&
+    rm -rf kcov-master &&
+    for file in target/debuv/git_issue-[^\.d]; do mkdir -p "target/cov/${basename $file}"; ./kcov-build/usr/local/bin/kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
+    bash <(curl -s https://codecov.io/bash) &&
+    echo "Uploaded code coverage"
+  fi
 
 notifications:
   - on_success: never
