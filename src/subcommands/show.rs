@@ -1,12 +1,9 @@
-extern crate reqwest;
-extern crate serde_json;
-
 use regex::Regex;
 use std::process::exit;
 
 pub fn show<S: Into<String>>(owner: S, repo: S, number: i32) {
-    let mut response = reqwest::get(&format!("https://api.github.com/repos/{}/{}/issues/{}", owner.into(), repo.into(), number)).unwrap();
-    if !response.status().is_success() {
+    let response = ureq::get(&format!("https://api.github.com/repos/{}/{}/issues/{}", owner.into(), repo.into(), number)).call();
+    if response.error() {
         println!("failed to get issues.");
 
         if cfg!(test) {
@@ -16,7 +13,7 @@ pub fn show<S: Into<String>>(owner: S, repo: S, number: i32) {
         exit(1);
     }
 
-    let text = response.text().unwrap();
+    let text = response.into_string().unwrap();
     let json = serde_json::from_str::<serde_json::Value>(&text).unwrap();
     println!("{}\t{} ({})\n\n{}",
              json["number"],

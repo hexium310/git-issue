@@ -3,8 +3,8 @@
 #[macro_use]
 extern crate clap;
 extern crate regex;
-extern crate reqwest;
 extern crate serde_json;
+extern crate ureq;
 
 use std::process::Command;
 use std::str;
