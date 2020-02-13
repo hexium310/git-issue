@@ -17,14 +17,7 @@ impl fmt::Display for CliError {
 }
 
 impl error::Error for CliError {
-    fn description(&self) -> &str {
-        match *self {
-            CliError::NotEnoughCommands => "Not enough commands.",
-            CliError::Parse(ref err) => err.description(),
-        }
-    }
-
-    fn cause(&self) -> Option<&dyn error::Error> {
+    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
         match *self {
             CliError::NotEnoughCommands => None,
             CliError::Parse(ref err) => Some(err),
