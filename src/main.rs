@@ -2,9 +2,9 @@
 
 #[macro_use]
 extern crate clap;
-extern crate regex;
-extern crate serde_json;
-extern crate ureq;
+
+
+
 
 use std::process::Command;
 use std::str;
@@ -12,7 +12,7 @@ use clap::{ App, ArgMatches };
 use regex::Regex;
 
 mod subcommands;
-use subcommands::*;
+use crate::subcommands::*;
 
 #[cfg(not(test))]
 fn main() {
@@ -51,7 +51,7 @@ fn main() {
     }
 }
 
-fn build_query_string(matches: &ArgMatches) -> String {
+fn build_query_string(matches: &ArgMatches<'_>) -> String {
     let query = &matches.args.iter().map(|(name, value)| {
         format!("{}={}", name, value.vals[0].to_str().unwrap())
     }).collect::<Vec<_>>().join("&");

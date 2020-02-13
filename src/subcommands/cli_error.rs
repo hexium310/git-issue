@@ -8,7 +8,7 @@ pub enum CliError {
 }
 
 impl fmt::Display for CliError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
             CliError::NotEnoughCommands => write!(f, "Not enough commands."),
             CliError::Parse(ref err) => write!(f, "Parse error: {}", err),
@@ -24,7 +24,7 @@ impl error::Error for CliError {
         }
     }
 
-    fn cause(&self) -> Option<&error::Error> {
+    fn cause(&self) -> Option<&dyn error::Error> {
         match *self {
             CliError::NotEnoughCommands => None,
             CliError::Parse(ref err) => Some(err),
